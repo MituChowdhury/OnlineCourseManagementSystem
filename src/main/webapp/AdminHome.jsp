@@ -5,7 +5,8 @@
 <html>
   <head>
     <title>ONLINE COURSE MANAGEMENT</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet"> 
+    <!-- style.css apply korle duita stylesheet overlap hoye jacche -->
     <style>
       html, body {
       display: flex;

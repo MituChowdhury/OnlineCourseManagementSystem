@@ -41,8 +41,12 @@
 <h1>OnlineCourseManagement</h1>
 <section>
   <ul id = "nav">
+    <ul id = "nav">
     <li><a class = "homered" href="AssignedCourseList.jsp">My Courses</a> </li>
     <li><a class = "homeblack" href="Login.jsp">Logout</a> </li>
+  </ul>
+    
+    
   </ul>
 
 </nav>
@@ -51,7 +55,7 @@
 </section>
 <% 
 
-String email = (String)request.getSession(false).getAttribute("Email");
+String cname = (String)request.getSession(false).getAttribute("coursename");
 
 try {
 	
@@ -59,55 +63,71 @@ try {
     java.sql.Connection con = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
     
-    String query = ("SELECT * FROM courses WHERE courseteacheremail = ?");
+    String query = ("SELECT DISTINCT email FROM takes WHERE coursename = ?");
 
     PreparedStatement ps = con.prepareStatement(query);
     
-    ps.setString(1, email);
-   
+    ps.setString(1, cname);
+
     ResultSet rs = ps.executeQuery();
     
 %>
    <table id="courses" align="center" style="width: 80%;line-height: 40px; margin-left: 100px;  margin-bottom: 50px;margin-top: 50px;" >
 	
 	<tr>
-    <th>Title</th>
-    <th>Code</th>
-    <th>Credit</th>
-    <th>Teacher Name</th>
-    <th>Teacher Email</th>
-    <th>Students</th>
+    <th>Username</th>
+    <th>Registration No</th>
+    <th>Department</th>
+    <th>Session</th>
+    <th>Email</th>
   	</tr>
   
    <%
     	
     	while(rs.next()){
    	
-   	 		String title = rs.getString("coursename");
-   	 		String code = rs.getString("coursecode");
-			String credit = rs.getString("credit");
-			String name = rs.getString("courseteachername");
-			String ctemail = rs.getString("courseteacheremail");
-			session.setAttribute("coursename",title);
-			
-       	 			
+   	 		String email = rs.getString("email");
+   	 	
+   	 		try{
+   	 	
+   	 			String query1 = ("SELECT * FROM students WHERE email = ?");
+
+     			PreparedStatement ps1 = con.prepareStatement(query1);
+     	
+     			ps1.setString(1, email);
+    
+     			ResultSet rs1 = ps1.executeQuery();
+     	
+     			while(rs1.next()){
+     	   	
+       	 			String reg = rs1.getString("regno");
+       	 			String dept = rs1.getString("dept");
+       	 			String sessionyear = rs1.getString("sessionyear");
+       	 			String name = rs1.getString("username");
+   	 
    	 %>
-   			<tr>
-    		<td><%=title%></td>
-			<td><%=code%></td>
-   			<td><%=credit%></td>
- 			<td><%=name%></td>
-  			<td><%=ctemail%></td>
-  			<td><a href="StudentList.jsp">View Students</a></td>
-			</tr>
+   					<tr>
+    				<td><%=name%></td>
+    				<td><%=reg%></td>
+    				<td><%=dept%></td>
+    				<td><%=sessionyear%></td>
+    				<td><%=email%></td>
+  					</tr>
    	    	
    	 		<% 
-    		}
-   	 	} catch (Exception e2) {
-            System.out.println(e2);
-        }
+    			}
+   	 		} catch (Exception e2) {
+            	System.out.println(e2);
+        	}
+   		}
    %>
    </table>
-   
+   <% 
+    
+	} catch (Exception e2) {
+    	System.out.println(e2);
+	}
+
+	%>
 </body>
 </html>

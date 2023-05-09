@@ -41,8 +41,12 @@
 <h1>OnlineCourseManagement</h1>
 <section>
   <ul id = "nav">
-    <li><a class = "homered" href="AssignedCourseList.jsp">My Courses</a> </li>
+    <li><a class = "homeblack" href="StudentHome.jsp">Enroll</a> </li>
+    <li><a class = "homered" href="EnrolledCourseList.jsp">My Courses</a> </li>
+    <li><a class = "homeblack" href="CourseList.jsp">View Courses</a> </li>
     <li><a class = "homeblack" href="Login.jsp">Logout</a> </li>
+    
+    
   </ul>
 
 </nav>
@@ -59,7 +63,7 @@ try {
     java.sql.Connection con = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
     
-    String query = ("SELECT * FROM courses WHERE courseteacheremail = ?");
+    String query = ("SELECT DISTINCT * FROM takes WHERE email = ?");
 
     PreparedStatement ps = con.prepareStatement(query);
     
@@ -76,7 +80,6 @@ try {
     <th>Credit</th>
     <th>Teacher Name</th>
     <th>Teacher Email</th>
-    <th>Students</th>
   	</tr>
   
    <%
@@ -84,30 +87,47 @@ try {
     	while(rs.next()){
    	
    	 		String title = rs.getString("coursename");
-   	 		String code = rs.getString("coursecode");
-			String credit = rs.getString("credit");
-			String name = rs.getString("courseteachername");
-			String ctemail = rs.getString("courseteacheremail");
-			session.setAttribute("coursename",title);
-			
-       	 			
+   	 	
+   	 		try{
+   	 	
+   	 			String query1 = ("SELECT * FROM courses WHERE coursename = ?");
+
+     			PreparedStatement ps1 = con.prepareStatement(query1);
+     	
+     			ps1.setString(1, title);
+    
+     			ResultSet rs1 = ps1.executeQuery();System.out.println("thik e toh ache");
+     	
+     			while(rs1.next()){
+     	   	
+       	 			String code = rs1.getString("coursecode");
+       	 			String credit = rs1.getString("credit");
+       	 			String ctname = rs1.getString("courseteachername");
+       	 			String ctemail = rs1.getString("courseteacheremail");
+   	 
    	 %>
-   			<tr>
-    		<td><%=title%></td>
-			<td><%=code%></td>
-   			<td><%=credit%></td>
- 			<td><%=name%></td>
-  			<td><%=ctemail%></td>
-  			<td><a href="StudentList.jsp">View Students</a></td>
-			</tr>
+   					<tr>
+    				<td><%=title%></td>
+    				<td><%=code%></td>
+    				<td><%=credit%></td>
+    				<td><%=ctname%></td>
+    				<td><%=ctemail%></td>
+  					</tr>
    	    	
    	 		<% 
-    		}
-   	 	} catch (Exception e2) {
-            System.out.println(e2);
-        }
+    			}
+   	 		} catch (Exception e2) {
+            	System.out.println(e2);
+        	}
+   		}
    %>
    </table>
-   
+   <% 
+    
+	} catch (Exception e2) {
+    	System.out.println(e2);
+	}
+
+	%>
 </body>
 </html>

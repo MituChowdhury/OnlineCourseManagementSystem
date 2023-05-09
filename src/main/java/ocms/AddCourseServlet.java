@@ -68,7 +68,6 @@ public class AddCourseServlet extends HttpServlet {
 			int i = ps.executeUpdate();
 			
 			if(i == 1){
-				System.out.println("doneee");
 				response.sendRedirect("CourseList.jsp");
 			}
 			else

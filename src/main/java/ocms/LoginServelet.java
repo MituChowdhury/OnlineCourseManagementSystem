@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServelet
@@ -67,10 +68,10 @@ public class LoginServelet extends HttpServlet {
             ps.setString(3, pass);
             
             //create a session and keep the email into Email caiable
-			/*
-			 * HttpSession session=request.getSession();
-			 * session.setAttribute("Email",email);
-			 */
+			
+			HttpSession session=request.getSession();
+			session.setAttribute("Email",email);
+			
            
             ResultSet rs = ps.executeQuery();
             
@@ -81,13 +82,13 @@ public class LoginServelet extends HttpServlet {
             	if(t.equals("student")) {
             		System.out.println("student");
             		//if any student try to login then 
-            		//request.getRequestDispatcher("StudentHome.jsp").forward(request,response);
+            		request.getRequestDispatcher("StudentHome.jsp").forward(request,response);
             		
             	}
             	else if(t.equals("teacher")) {
             		System.out.println("teacher");
             		//if any teacher try to login then
-            		//request.getRequestDispatcher("TeacherHome.jsp").forward(request,response);
+            		request.getRequestDispatcher("TeacherHome.jsp").forward(request,response);
             		
             	}
             	else if(t.equals("admin")) {
