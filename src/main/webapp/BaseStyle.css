@@ -3,6 +3,12 @@ body {
     font-family: Roboto, Arial, sans-serif;
 }
 
+#welcome{
+    padding: 1em 0px;
+    background-color: #A8D1D1;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}
+
 #head {
     background-color: #A8D1D1;
     display: flex;
@@ -14,9 +20,16 @@ body {
 .wlc {
     margin: 0px;
     color: white;
-    padding-left: 1em;
     font-size: 1.5em;
     font-weight: 300;
+}
+
+.logwlc {
+    text-align: center;
+}
+
+.owlc {
+    padding-left: 1em;
 }
 
 #nav {
@@ -85,7 +98,6 @@ input[type="text"],input[type="email"], input[type="password"], select[name] {
     width: 100%;
     padding: 1em .8em;
     margin: .5em 0;
-    display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
@@ -118,4 +130,9 @@ button:hover {
 .container {
     padding: 1em 0;
     text-align: left;
+}
+
+#foot > p {
+    text-align: center;
+    padding-top: 2.5em;
 }
