@@ -36,6 +36,17 @@
 </style>
 </head>
 <body>
+
+	<!-- ei scriplet ta body er starting e thakte hobe -->
+    	<%
+    		response.setHeader("cache-control", "no-cache no-store must-revalidate" );
+    	
+    		if(session.getAttribute("Email") == null){
+				response.sendRedirect("Login.jsp");
+			}
+    		
+    	%>
+
 <header>
 <nav>
 <h1>OnlineCourseManagement</h1>

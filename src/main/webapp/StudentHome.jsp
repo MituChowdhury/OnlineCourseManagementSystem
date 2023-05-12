@@ -62,6 +62,16 @@
     </style>
   </head>
   <body>
+  	
+  	<!-- ei scriplet ta body er starting e thakte hobe -->
+    	<%
+    		response.setHeader("cache-control", "no-cache no-store must-revalidate" );
+    	
+    		if(session.getAttribute("Email") == null){
+				response.sendRedirect("Login.jsp");
+			}
+    	%>
+  
     <form action="enroll" method="post">
       <h1>Enroll Into Course</h1>
       <div class="formcontainer">

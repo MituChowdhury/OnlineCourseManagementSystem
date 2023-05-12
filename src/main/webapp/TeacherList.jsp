@@ -36,54 +36,26 @@
 </style>
 </head>
 <body>
+
 <!-- ei scriplet ta body er starting e thakte hobe -->
     	<%
     		response.setHeader("cache-control", "no-cache no-store must-revalidate" );
     	
     		if(session.getAttribute("Email") == null){
-				response.sendRedirect("Login.jsp");
-			}	
-    	
+    			response.sendRedirect("Login.jsp");
+    		}
     	%>
+
 <header>
 <nav>
 <h1>OnlineCourseManagement</h1>
 <section>
   <ul id = "nav">
-  	<%
-  		Class.forName("com.mysql.jdbc.Driver");
-    	java.sql.Connection con = DriverManager.getConnection(
-        	    "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
-    
-    	String uemail = (String)request.getSession(false).getAttribute("Email");
-    	
-    	PreparedStatement ps0 = con.prepareStatement("SELECT usertype FROM users WHERE email = ?");
-
-    	ps0.setString(1, uemail);	
-   
-    	ResultSet rs0 = ps0.executeQuery();
-    
-    	String t = "";
-    	
-    	if(rs0.next()) {
-    		t = rs0.getString("usertype");
-    	}
-    	if(t.equals("student")){
-    	%>
-    	<li><a class = "homeblack" href="StudentHome.jsp">Enroll</a> </li>
-    	<li><a class = "homeblack" href="EnrolledCourseList.jsp">My Courses</a> </li>
-    	<%
-    	}
-    	else if(t.equals("admin")){
-    	%>
-    	<li><a class = "homeblack" href="AdminHome.jsp">Add Courses</a> </li>
-    	<li><a class = "homeblack" href="TeacherList.jsp">View Teachers</a> </li>
-    	<%
-    	}
-  	%>
-     <li><a class = "homered" href="CourseList.jsp">View Courses</a> </li>
+  
+  	 <li><a class = "homeblack" href="AdminHome.jsp">Add Courses</a> </li>
+  	 <li><a class = "homered" href="TeacherList.jsp">View Teachers</a> </li>
+     <li><a class = "homeblack" href="CourseList.jsp">View Courses</a> </li>
      <li><a class = "homeblack" href="Login.jsp">Logout</a> </li>
-    
     
   </ul>
 
@@ -94,8 +66,12 @@
 <% 
 
 try {
+	
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection con = DriverManager.getConnection(
+			"jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
     
-    String query = "SELECT * FROM courses";
+    String query = "SELECT * FROM teachers";
 
     PreparedStatement ps = con.prepareStatement(query);
    
@@ -105,31 +81,24 @@ try {
    <table id="courses" align="center" style="width: 80%;line-height: 40px; margin-left: 100px;  margin-bottom: 50px;margin-top: 50px;" >
 	
 	<tr>
-    <th>Title</th>
-    <th>Code</th>
-    <th>Credit</th>
     <th>Teacher Name</th>
     <th>Teacher Email</th>
+    <th>Department</th>
   </tr>
    <%
     
     while(rs.next()){
-   	
-   	 String title = rs.getString("coursename");
-   	 String code = rs.getString("coursecode");
-   	 String credit = rs.getString("credit");
-   	 String name = rs.getString("courseteachername");
-   	 String email = rs.getString("courseteacheremail");
-   
+    	
+   	 String dept = rs.getString("dept");
+   	 String name = rs.getString("username");
+   	 String email = rs.getString("email");
    	 
    	 %>
    		<tr>
-    <td><%=title%></td>
-    <td><%=code%></td>
-    <td><%=credit%></td>
-    <td><%=name%></td>
-    <td><%=email%></td>
-  </tr>
+    	<td><%=name%></td>
+    	<td><%=email%></td>
+    	<td><%=dept%></td>
+  		</tr>
    	    	
    	 <% 
    

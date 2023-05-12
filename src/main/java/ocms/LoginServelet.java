@@ -67,7 +67,7 @@ public class LoginServelet extends HttpServlet {
             ps.setString(2, email);
             ps.setString(3, pass);
             
-            //create a session and keep the email into Email caiable
+            //create a session and keep the email 
 			
 			HttpSession session=request.getSession();
 			session.setAttribute("Email",email);
@@ -97,6 +97,7 @@ public class LoginServelet extends HttpServlet {
             		request.getRequestDispatcher("AdminHome.jsp").forward(request,response);
             		
             	}
+            	session.setAttribute("Usertype", t);
                 
             }
             //if anyone enter wrong email or password

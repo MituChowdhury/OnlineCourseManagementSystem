@@ -36,6 +36,17 @@
 </style>
 </head>
 <body>
+
+<!-- ei scriplet ta body er starting e thakte hobe -->
+    	<%
+    		response.setHeader("cache-control", "no-cache no-store must-revalidate" );
+    	
+    		if(session.getAttribute("Email") == null){
+				response.sendRedirect("Login.jsp");
+			}
+    		
+    	%>
+
 <header>
 <nav>
 <h1>OnlineCourseManagement</h1>
@@ -98,7 +109,11 @@ try {
    			<td><%=credit%></td>
  			<td><%=name%></td>
   			<td><%=ctemail%></td>
-  			<td><a href="StudentList.jsp">View Students</a></td>
+  			<td><form action="show student" method = "post">
+     			<input type = "hidden" name = "cname" value = "<%=title%>" id = "<%=title%>">
+     			<input style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;color:white;background:#A9A9A9;height:50px;" type = "submit" name ="see" value ="Show Students" id = "<%=title%>">
+     			</form>
+     		<td>
 			</tr>
    	    	
    	 		<% 

@@ -85,7 +85,6 @@ public class EnrollServelet extends HttpServlet {
 	                    int i = ps1.executeUpdate();
 	                    
 	                    if (i == 1) {
-	                    	System.out.println("hoye geche");
 	                    	request.getRequestDispatcher("EnrolledCourseList.jsp").forward(request,response);
 	                    }
 	                    else{
