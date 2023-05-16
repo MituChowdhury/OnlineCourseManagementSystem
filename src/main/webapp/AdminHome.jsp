@@ -1,30 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>ONLINE COURSE MANAGEMENT SYSTEM</title>
+    <head>    
+        <title>Online Course Management System</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="BaseStyle.css">
+        <link rel="icon" type="image/png" href="favicon-dark.png" media="(prefers-color-scheme: dark)">
+        <link rel="icon" type="image/png" href="favicon-light.png" media="(prefers-color-scheme: light)">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     </head>
     <body>
-    	 <!-- ei scriplet ta body er starting e thakte hobe -->
-    	<%
-    		response.setHeader("cache-control", "no-cache no-store must-revalidate" );
-
+        <%
+    		response.setHeader("cache-control", "no-cache no-store must-revalidate");
     		/// if user tries to access a page which is not allowed
-    		if(session.getAttribute("Email") == null){
+    		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
 			}
     	%>
-    
         <header id="head">
-            <h1 class="wlc owlc">Online Course Management System</h1>
+            <div id="name">
+                <img src="logo.png" alt="OCMS logo" height="40px">
+                <h1 class="wlc owlc">Online Course Management System</h1>
+            </div>
             <ul id="nav">
                 <li class="type"><strong>Admin Section</strong></li>  
-                <li><a class = "actv" href="adminHome.jsp">Add Course</a></li>
-                <li><a href="TeacherList.jsp">View Teachers</a> </li>
+                <li><a class="actv" href="AdminHome.jsp">Add Course</a></li>
+                <li><a href="TeacherList.jsp">View Teachers</a></li>
                 <li><a href="CourseList.jsp">View Courses</a></li>
                 <li><a href="Login.jsp">Logout</a></li>
                 <!-- <li><form action="logout" method="post">
@@ -37,7 +38,7 @@
             <form action="add course" method="post">
                 <h1 class="fh">Add Course</h1>
                 <div class="formcontainer">
-                    <hr/>
+                    <hr>
                     <div class="container">
                         <label for="ctitle" class="bold">Course Title</label>
                         <input type="text" placeholder="Enter Course Title" name="ctitle" required>

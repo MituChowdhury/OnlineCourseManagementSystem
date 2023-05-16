@@ -1,22 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Welcome to OCMS</title>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="BaseStyle.css">
+        <link rel="icon" type="image/png" href="favicon-dark.png" media="(prefers-color-scheme: dark)">
+        <link rel="icon" type="image/png" href="favicon-light.png" media="(prefers-color-scheme: light)">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     </head>
     <body>
         <header id="welcome">
+            <img class="logo" src="logo.png" alt="OCMS logo" height="50px">
             <h1 class="wlc logwlc">Welcome to Online Course Management System</h1>
         </header>
         <div id="main">
             <form action="login" method="post">
                 <h1 class="fh">User Login</h1>
                 <div class="formcontainer">
-                    <hr/>
+                    <hr>
                     <div class="container">
                         <label for="uname" class="bold">Username</label>
                         <input type="text" placeholder="Enter Username" name="uname" required>

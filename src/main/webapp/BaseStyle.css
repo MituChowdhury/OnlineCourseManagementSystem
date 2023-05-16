@@ -4,7 +4,7 @@ body {
 }
 
 #welcome{
-    padding: 1em 0px;
+    padding: .5em 0px;
     background-color: #A8D1D1;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
 }
@@ -15,6 +15,18 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}
+
+#name {
+    display: flex;
+    padding-left: 1em;
+    align-items: center;
+}
+
+.logo {
+    align-self: center;
+    display: block;
+    margin: auto;
 }
 
 .wlc {
@@ -29,7 +41,7 @@ body {
 }
 
 .owlc {
-    padding-left: 1em;
+    padding-left: .1em;
 }
 
 #nav {
@@ -129,10 +141,40 @@ button:hover {
 
 .container {
     padding: 1em 0;
-    text-align: left;
+	text-align: left;
+}
+
+#courses {
+	border-collapse: collapse;
+	width: 75%;
+	line-height: 2.5em;
+	margin: auto;
+	margin-top: 3em;
+	margin-bottom: 3em;
+	text-align: center;
+  	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+		
+#courses td, #courses th {
+ 	padding: .5em;
+  	border: none;
+}
+		
+#courses tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+		
+#courses tr:hover {
+	background-color: #ddd;
+}
+		
+#courses th {
+	background-color: #A8D1D1;
+	color: white;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 #foot > p {
     text-align: center;
-    padding-top: 2.5em;
+    padding-top: .5em;
 }
