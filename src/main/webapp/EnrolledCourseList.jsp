@@ -29,14 +29,14 @@
 				<li><a href="StudentHome.jsp">Enroll</a></li>
 				<li><a class="actv" href="EnrolledCourseList.jsp">My Courses</a></li>
 				<li><a href="CourseList.jsp">View Courses</a></li>
-				<li><a href="Login.jsp">Logout</a></li>
+				<li><button onclick="document.location='Login.jsp'">Logout</button></li>
 			</ul>
 		</header>
 		<%
 			String email = (String) request.getSession(false).getAttribute("Email");
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ocms", "root", "Triple$:)");
+				java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
 				String query = ("SELECT DISTINCT * FROM takes WHERE email = ?");
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setString(1, email);

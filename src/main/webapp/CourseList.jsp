@@ -27,7 +27,7 @@
 			<ul id="nav">
 				<%
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ocms", "root", "Triple$:)");
+					java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
 					String uemail = (String)request.getSession(false).getAttribute("Email");
 					System.out.println("email: " + uemail);
 					PreparedStatement ps0 = con.prepareStatement("SELECT usertype FROM users WHERE email = ?");
@@ -53,7 +53,7 @@
 					}
 				%>
 				<li><a class="actv" href="CourseList.jsp">View Courses</a></li>
-				<li><a href="Login.jsp">Logout</a></li>
+				<li><button onclick="document.location='Login.jsp'">Logout</button></li>
 			</ul>
 		</header>
 		<%

@@ -27,11 +27,7 @@
                 <li><a class="actv" href="AdminHome.jsp">Add Course</a></li>
                 <li><a href="TeacherList.jsp">View Teachers</a></li>
                 <li><a href="CourseList.jsp">View Courses</a></li>
-                <li><a href="Login.jsp">Logout</a></li>
-                <!-- <li><form action="logout" method="post">
-                	<input type="submit" value="Logout">
-                	</form>
-                </li> -->
+                <li><button onclick="document.location='Login.jsp'">Logout</button></li>
             </ul>
         </header>
         <div id="main">
@@ -57,7 +53,7 @@
                         <label for="ctmail" class="bold">Teacher Email</label>
                         <input type="email" placeholder="Enter Teacher Email" name="ctmail" required>
                     </div>
-                    <button type="submit">Add</button>
+                    <button class="btn" type="submit">Add</button>
                 </div>
             </form>
         </div>

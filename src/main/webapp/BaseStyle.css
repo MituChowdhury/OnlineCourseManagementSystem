@@ -53,6 +53,7 @@ body {
 
 li {
     color: white;
+    text-align: center;
 }
 
 li a {
@@ -61,12 +62,23 @@ li a {
     text-align: center;
     padding: 1em 1em;
     text-decoration: none;
-    list-style-type: none;
     height: 100%;
     box-sizing: border-box;
 }
 
-li a:hover:not(.actv) {
+li button {
+    display: block;
+    color: white;
+    padding: 1em 1em;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    background-color: #A8D1D1;
+    font-size: 1em;
+    font-family: Roboto, Arial, sans-serif;
+}
+
+li a:hover:not(.actv), li button:hover {
     background-color: #3A98B9;
 }
 
@@ -118,7 +130,7 @@ input[type="text"],input[type="email"], input[type="password"], select[name] {
     font-weight: 500;
 }
 
-button {
+.btn {
     background-color: #A8D1D1;
     color: white;
     font-size: 1em;
@@ -130,7 +142,7 @@ button {
     width: 100%;
 }
 
-button:hover {
+.btn:hover {
     opacity: 0.8;
 }
 

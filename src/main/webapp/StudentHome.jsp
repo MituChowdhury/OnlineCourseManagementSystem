@@ -27,7 +27,7 @@
 				<li><a class="actv" href="StudentHome.jsp">Enroll</a></li>
 			    <li><a href="EnrolledCourseList.jsp">My Courses</a></li>
 				<li><a href="CourseList.jsp">View Courses</a></li>
-				<li><a href="Login.jsp">Logout</a></li>
+				<li><button onclick="document.location='Login.jsp'">Logout</button></li>
 			</ul>
 	    </header>
         <div id="main">
@@ -41,7 +41,7 @@
                         <label for="ccode" class="bold">Course Code</label>
                         <input type="text" placeholder="Enter Course Code" name="ccode" required>
                     </div>
-                    <button type="submit">Enroll</button>
+                    <button class="btn" type="submit">Enroll</button>
                 </div>
             </form>
         </div>
