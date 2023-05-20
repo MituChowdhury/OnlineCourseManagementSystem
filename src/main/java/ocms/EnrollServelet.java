@@ -51,7 +51,7 @@ public class EnrollServelet extends HttpServlet {
 		 String email = (String)request.getSession(false).getAttribute("Email");
 		 
 		 try {
-	            Class.forName("com.mysql.jdbc.Driver");
+	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            java.sql.Connection con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
 	 
