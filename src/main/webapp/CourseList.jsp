@@ -13,13 +13,13 @@
 	</head>
 	<body>
 		<%
-        
-        	/* clears the cache */
-        
+		
+        	/* Clears the cache */
+        	
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
 
-        	/* If user tries to access a page without logging in */
-        
+			/* If user tries to access a page without logging in then they will be redirected to the login page */
+        	
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
 			}
@@ -53,8 +53,7 @@
 						t = rs0.getString("usertype");
 					}
 					
-					/* If user is a student displays 
-					   student content in the navigation bar */
+					/* If user is a student then available options for student section will be shown on the navigation bar */
 					
 					if (t.equals("student")) {
 				%>
@@ -66,8 +65,7 @@
 				<%
 					}
 					
-					/* If user is an admin displays 
-					   admin content in the navigation bar */
+					/* If user is an admin then available options for admin section will be shown on the navigation bar */
 					
 					else if (t.equals("admin")) {
 				%>
