@@ -120,6 +120,7 @@
 					
 					catch(Exception e2) {
 						request.getSession().setAttribute("ErrorString", "There's an error. That's all we know :(");
+						request.getRequestDispatcher("Error.jsp").forward(request,response);
 						System.out.println(e2);
 					}
 				}
@@ -134,6 +135,7 @@
 			
 			catch(Exception e1) {
 				request.getSession().setAttribute("ErrorString", "There's an error. That's all we know :(");
+				request.getRequestDispatcher("Error.jsp").forward(request,response);
 				System.out.println(e1);
 			}
 		%>

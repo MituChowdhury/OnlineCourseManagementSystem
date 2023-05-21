@@ -40,6 +40,44 @@ public class EnrollServelet extends HttpServlet {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            java.sql.Connection con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
+	            
+	            
+	            /* Prepares and executes a query to check if the input 
+	               coursename and coursecode are valid or not */
+	            
+	            String query0 = "SELECT coursecode FROM courses WHERE coursename = ?";
+	            
+	            PreparedStatement ps0 = con.prepareStatement(query0);
+	            
+	            ps0.setString(1, title);
+	            
+	            ResultSet rs0 = ps0.executeQuery();
+	            
+	            /* Checks if corresponding coursecode exists */
+	            
+	            if(rs0.next()) {
+	            	
+	            	String ccode = rs0.getString("coursecode");
+	            	
+	            	/* Checks if coursecode for the input coursename matches
+	            	   shows the error message instead */
+	            	
+	            	if(ccode.equals(code) == false) {
+	            		request.getSession().setAttribute("ErrorString", "Enroll Failed! Wrong course name or course code.");
+                    	request.getRequestDispatcher("Error.jsp").forward(request,response);
+                    	return;
+	            	}
+	            	
+	            }
+	            
+	            /* if coursecode doesn't exist for the input coursename 
+	             	shows error message */
+	            
+	            else {
+	            	request.getSession().setAttribute("ErrorString", "Enroll Failed! Wrong course name or course code.");
+                	request.getRequestDispatcher("Error.jsp").forward(request,response);
+                	return;
+	            }
 	 
 	            /* Prepares and executes the query by using the email 
 			 		and fetches information from 'students' table in database */
@@ -102,5 +140,4 @@ public class EnrollServelet extends HttpServlet {
 	            System.out.println(e2);
 	        }		
 	}
-
 }

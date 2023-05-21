@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +40,43 @@ public class AddCourseServlet extends HttpServlet {
 			Connection con = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
 			
+			/* Prepares and executes a query to check if the input 
+            course teacher name and course teacher email are valid or not */
+         
+         String query0 = "SELECT email FROM teachers WHERE username = ?";
+         
+         PreparedStatement ps0 = con.prepareStatement(query0);
+         
+         ps0.setString(1, teacher);
+         
+         ResultSet rs0 = ps0.executeQuery();
+         
+         /* Checks if corresponding email exists */
+         
+         if(rs0.next()) {
+         	
+         	String ctmail = rs0.getString("email");
+         	
+         	/* Checks if course teacher email for the input course teacher name 
+         	   matches , shows the error message instead */
+         	
+         	if(ctmail.equals(email) == false) {
+         		request.getSession().setAttribute("ErrorString", "Adding course failed! Wrong teacher information.");
+             	request.getRequestDispatcher("Error.jsp").forward(request,response);
+             	return;
+         	}
+         	
+         }
+         
+         /* if email doesn't exist for the input teacher name 
+          	shows error message */
+         
+         else {
+         	request.getSession().setAttribute("ErrorString", "Adding course failed! Wrong teacher information.");
+         	request.getRequestDispatcher("Error.jsp").forward(request,response);
+         	return;
+         }
+			
 			/* Prepares and executes the query by using the input values 
 			 	and adds a course into the 'courses' table in database */
 			
@@ -63,11 +101,11 @@ public class AddCourseServlet extends HttpServlet {
 				Sends the probable error string to the error page for display */
 			
 			else {
-				request.getSession().setAttribute("ErrorString", "Adding Course Failed! This course might already be added.");
+				request.getSession().setAttribute("ErrorString", "Adding course failed! This course might already be added or wrong course information.");
             	request.getRequestDispatcher("Error.jsp").forward(request,response);
 			}
 		} catch (Exception e2) {
-			request.getSession().setAttribute("ErrorString", "Adding Course Failed! This course might already be added.");
+			request.getSession().setAttribute("ErrorString", "Adding course failed! This course might already be added or wrong course information.");
         	request.getRequestDispatcher("Error.jsp").forward(request,response);
             System.out.println(e2);
         }
