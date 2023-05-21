@@ -13,11 +13,11 @@
     
         <%
         
-        	/* clears the cache */
+        	/* Clears the cache */
         
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
 
-        	/* If user tries to access a page without logging in */
+        	/* If user tries to access a page without logging in then they will be redirected to the login page */
         
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");

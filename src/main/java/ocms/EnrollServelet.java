@@ -29,7 +29,7 @@ public class EnrollServelet extends HttpServlet {
 		 String code = request.getParameter("ccode");
 		 String title = request.getParameter("ctitle");
 		 
-		 /* using session get the current user's email */
+		 /* Using session get the current user's email */
 		 
 		 String email = (String)request.getSession(false).getAttribute("Email");
 		 
