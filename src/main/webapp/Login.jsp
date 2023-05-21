@@ -15,7 +15,7 @@
             <h1 class="wlc logwlc">Welcome to Online Course Management System</h1>
         </header>
         <div id="main">
-            <form action="login" method="post">
+            <form class="frm" action="login" method="post">
                 <h1 class="fh">User Login</h1>
                 <div class="formcontainer">
                     <hr>

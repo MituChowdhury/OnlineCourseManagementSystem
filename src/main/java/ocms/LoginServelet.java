@@ -15,59 +15,43 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LoginServelet
  */
+
 @WebServlet("/login")
 public class LoginServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServelet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	/*
-	 * protected void doGet(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { // TODO Auto-generated
-	 * method stub
-	 * response.getWriter().append("Served at: ").append(request.getContextPath());
-	 * }
-	 */
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
-		//response.setContentType("text/html");
  
+		/* Retrieves the parameters from the client */
+		
         String username = request.getParameter("uname");
         String email = request.getParameter("mail");
         String pass = request.getParameter("psw");
    
         try {
         	
+        	/* Sets the database connection */
+        	
             Class.forName("com.mysql.cj.jdbc.Driver");
             java.sql.Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
             
             
-            //check if credentials match
+            /* Prepares and executes a query using the input values
+             	and fetches information from 'users' table in database*/
+            
             String query = "SELECT * FROM users WHERE username = ? AND email = ? AND pass = ?";
 
             PreparedStatement ps = con.prepareStatement(query);
- 
-            //compared email and password
+             
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, pass);
             
-            //create a session and keep the email 
+            /* Creates a session and keep the current user's email */ 
 			
 			HttpSession session=request.getSession();
 			session.setAttribute("Email",email);
@@ -75,37 +59,51 @@ public class LoginServelet extends HttpServlet {
            
             ResultSet rs = ps.executeQuery();
             
+            /* If credentials match and produces output */
+            
             if(rs.next()) {
-            	//Retrieve the user's type who is trying to login
+            	
+            	/* Retrieves the user's type */
+            	
             	String t = rs.getString("usertype");
-            	///System.out.println("hiii" + t);
+            	
             	if(t.equals("student")) {
-            		System.out.println("student");
-            		//if any student try to login then 
+            		
+            		/* If user is a student */ 
+            		
             		request.getRequestDispatcher("StudentHome.jsp").forward(request,response);
             		
             	}
             	else if(t.equals("teacher")) {
-            		System.out.println("teacher");
-            		//if any teacher try to login then
+
+            		/* If user is a teacher */ 
+            		
             		request.getRequestDispatcher("TeacherHome.jsp").forward(request,response);
             		
             	}
             	else if(t.equals("admin")) {
-            		System.out.println("admin");
-            		//if admin try to login then
+            		
+            		/* If user is an admin */ 
+            		
             		request.getRequestDispatcher("AdminHome.jsp").forward(request,response);
             		
             	}
+            	
+            	/* Keeps the user's type */ 
             	session.setAttribute("Usertype", t);
                 
             }
-            //if anyone enter wrong email or password
+            
+            /* If credentials don't match and error occurs */ 
+            
             else {
-            	response.sendRedirect("Login.jsp");
+            	request.getSession().setAttribute("ErrorString", "Wrong Credentials!");
+            	request.getRequestDispatcher("Error.jsp").forward(request,response);
             }
                   
         } catch (Exception e2) {
+        	request.getSession().setAttribute("ErrorString", "There's an error. That's all we know :(");
+        	request.getRequestDispatcher("Error.jsp").forward(request,response);
             System.out.println(e2);
         } 
 	}

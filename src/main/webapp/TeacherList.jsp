@@ -13,12 +13,18 @@
 	</head>
 	<body>
      	<%
+        
+        	/* clears the cache */
+        
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
-    		/// if user tries to access a page which is not allowed
+
+        	/* If user tries to access a page without logging in */
+        
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
 			}
     	%>
+    	
 		<header id="head">
 			<div id="name">
                 <img src="logo.png" alt="OCMS logo" height="40px">
@@ -34,12 +40,22 @@
 		</header>
 		<%
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
+				
+				/* Sets database connection */
+				
+				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
-			    String query = "SELECT * FROM teachers";
-			    PreparedStatement ps = con.prepareStatement(query);
+			    
+				/* Prepares and executes a query to produce the teacher list 
+				   from 'teachers' table */
+				
+				String query = "SELECT * FROM teachers";
+			    
+				PreparedStatement ps = con.prepareStatement(query);
+				
 				ResultSet rs = ps.executeQuery();
 		%>
+		
 		<table id="courses">
 			<tr>
     			<th>Teacher Name</th>
@@ -48,6 +64,9 @@
   			</tr>
    			<%
 				while(rs.next()) {
+					
+					/* Retrieves and displays the teacher information */
+					
 					String dept = rs.getString("dept");
 					String name = rs.getString("username");
 				   	String email = rs.getString("email");
@@ -63,7 +82,11 @@
 		</table>
 		<%
 			}
+		
+			/* If any error occurs */
+		
 			catch(Exception e2) {
+				request.getSession().setAttribute("ErrorString", "There's an error. That's all we know :(");
 				System.out.println(e2);
 			}
 		%>

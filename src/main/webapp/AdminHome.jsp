@@ -11,8 +11,13 @@
     </head>
     <body>
         <%
+        
+        	/* clears the cache */
+        
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
-    		/// if user tries to access a page which is not allowed
+
+        	/* If user tries to access a page without logging in */
+        
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
 			}
@@ -27,11 +32,11 @@
                 <li><a class="actv" href="AdminHome.jsp">Add Course</a></li>
                 <li><a href="TeacherList.jsp">View Teachers</a></li>
                 <li><a href="CourseList.jsp">View Courses</a></li>
-                <li><button onclick="document.location='Login.jsp'">Logout</button></li>
+                <li><button onclick="document.location='Login.jsp'" onclick=>Logout</button></li>
             </ul>
         </header>
         <div id="main">
-            <form action="add course" method="post">
+            <form class="frm" action="add course" method="post">
                 <h1 class="fh">Add Course</h1>
                 <div class="formcontainer">
                     <hr>

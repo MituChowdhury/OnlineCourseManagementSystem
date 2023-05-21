@@ -17,32 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/add course")
 public class AddCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddCourseServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	/*
-	 * protected void doGet(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { // TODO Auto-generated
-	 * method stub
-	 * response.getWriter().append("Served at: ").append(request.getContextPath());
-	 * }
-	 */
-
+    
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+		
+		/* Retrieves the parameters from the client */
 		
 		String coursetitle = request.getParameter("ctitle");
 		String coursecode = request.getParameter("ccode");
@@ -52,9 +33,14 @@ public class AddCourseServlet extends HttpServlet {
 		
 		try {
 			
+			/* Sets the database connection */
+			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
+			
+			/* Prepares and executes the query by using the input values 
+			 	and adds a course into the 'courses' table in database */
 			
 			PreparedStatement ps = con.prepareStatement(
 					"INSERT INTO courses (coursecode, coursename, credit, courseteachername, courseteacheremail) VALUES (?, ?, ?, ?, ?)");
@@ -67,12 +53,22 @@ public class AddCourseServlet extends HttpServlet {
 			
 			int i = ps.executeUpdate();
 			
+			/* If query is successful */
+			
 			if(i == 1){
 				response.sendRedirect("CourseList.jsp");
 			}
-			else
-				response.sendRedirect("AdminHome.jsp");
+			
+			/* If any error occurs because of duplicate entry in the database
+				Sends the probable error string to the error page for display */
+			
+			else {
+				request.getSession().setAttribute("ErrorString", "Adding Course Failed! This course might already be added.");
+            	request.getRequestDispatcher("Error.jsp").forward(request,response);
+			}
 		} catch (Exception e2) {
+			request.getSession().setAttribute("ErrorString", "Adding Course Failed! This course might already be added.");
+        	request.getRequestDispatcher("Error.jsp").forward(request,response);
             System.out.println(e2);
         }
 	}

@@ -15,41 +15,31 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class StudentServlet
  */
+
 @WebServlet("/show student")
 public class StudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public StudentServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	/*
-	 * protected void doGet(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { // TODO Auto-generated
-	 * method stub
-	 * response.getWriter().append("Served at: ").append(request.getContextPath());
-	 * }
-	 */
+      
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+	
+		/* Retrieves the coursename from the client */
+		
 		String cname = request.getParameter("cname");
 		
 		try {
 			
+			/* Sets the database connection */
+			
 		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    java.sql.Connection con = DriverManager.getConnection(
 		            "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
+		    
+		    /* Prepares and executes a query using the coursename 
+		       and fetches information from the join operation of 'takes' and 
+		       'students' table in database */
 		    
 		    String query = (
 		    		"SELECT * FROM takes join students on takes.username = students.username WHERE coursename = ?");
@@ -60,11 +50,19 @@ public class StudentServlet extends HttpServlet {
 
 		    ResultSet rs = ps.executeQuery();
 		    
+		    /* Keeps the produced Resultset from the query 
+		       and send it to StudentList.jsp file */
+		    
 		    request.getSession().setAttribute("Resultset", rs);
 		    
 		    request.getRequestDispatcher("StudentList.jsp").forward(request,response);
 		    
 		} catch (Exception e2) {
+			
+			/* If any error occurs displays the error message */
+			
+			request.getSession().setAttribute("ErrorString", "There's an error. That's all we know :(");
+        	request.getRequestDispatcher("Error.jsp").forward(request,response);
 	    	System.out.println(e2);
 		}
 	}

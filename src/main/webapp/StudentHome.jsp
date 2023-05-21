@@ -10,13 +10,20 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     </head>
     <body>
+    
         <%
+        
+        	/* clears the cache */
+        
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
-			/// if user tries to access a page which is not allowed
+
+        	/* If user tries to access a page without logging in */
+        
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
-			}	
+			}
     	%>
+    	
   	    <header id="head">
 			<div id="name">
                 <img src="logo.png" alt="OCMS logo" height="40px">
@@ -30,8 +37,9 @@
 				<li><button onclick="document.location='Login.jsp'">Logout</button></li>
 			</ul>
 	    </header>
+	    
         <div id="main">
-            <form action="enroll" method="post">
+            <form class="frm" action="enroll" method="post">
                 <h1 class="fh">Enroll into Course</h1>
                 <div class="formcontainer">
                     <hr>

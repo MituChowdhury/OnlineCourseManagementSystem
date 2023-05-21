@@ -14,48 +14,36 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class EnrollServelet
  */
+
 @WebServlet("/enroll")
 public class EnrollServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EnrollServelet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	/*
-	 * protected void doGet(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { // TODO Auto-generated
-	 * method stub
-	 * response.getWriter().append("Served at: ").append(request.getContextPath());
-	 * }
-	 */
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
+		
+		/* Retrieves the parameters from the client */
 		
 		 String code = request.getParameter("ccode");
 		 String title = request.getParameter("ctitle");
 		 
-		 //using session get the current user's email
+		 /* using session get the current user's email */
+		 
 		 String email = (String)request.getSession(false).getAttribute("Email");
 		 
 		 try {
+			 
+			 	/* Sets the database connection */
+			 
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            java.sql.Connection con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/ocms", "root", "ithinkiseeu5020");
 	 
-	            //Retrieve the information from student table of the current user
+	            /* Prepares and executes the query by using the email 
+			 		and fetches information from 'students' table in database */
+	            
 	            String query = "SELECT * FROM students WHERE email = ?";
 
 	            PreparedStatement ps = con.prepareStatement(query);
@@ -65,13 +53,18 @@ public class EnrollServelet extends HttpServlet {
 	            ResultSet rs = ps.executeQuery();
 	            
 	            while(rs.next()) {
-	            	//Retrieve data
+	            	
+	            	/* If query is successful 
+	            	   retrieves student data */
+	            	
 	            	String name = rs.getString("username");
 	            	String reg = rs.getString("regno");
 	            	
 	            	try {
 	          
-	                   //insert those retrieved data into course_reg table
+	            		/* Prepares and executes the query by using the input values 
+	    			 		and enrolls into desired course storing information in 'takes' table in database */
+	            		
 	                    PreparedStatement ps1= con
 	                            .prepareStatement(
 	                            		"INSERT INTO takes (username, regno, email, coursename, coursecode) values(?,?,?,?,?)");
@@ -84,17 +77,28 @@ public class EnrollServelet extends HttpServlet {
 	         
 	                    int i = ps1.executeUpdate();
 	                    
+	                    /* If query is successful */
+	                    
 	                    if (i == 1) {
 	                    	request.getRequestDispatcher("EnrolledCourseList.jsp").forward(request,response);
 	                    }
+	                    
+	                    /* If any error occurs because of duplicate entry in the database
+	    				Sends the probable error string to the error page for display */
+	                    
 	                    else{
-	                    	//response.getWriter().printWriter().print("Registration Failled!");
+	                    	request.getSession().setAttribute("ErrorString", "Enroll Failed! You might've already enrolled in this course.");
+	                    	request.getRequestDispatcher("Error.jsp").forward(request,response);
 	                    }
 	                }catch (Exception e2) {
+	                	request.getSession().setAttribute("ErrorString", "Enroll Failed! You might've already enrolled in this course.");
+                    	request.getRequestDispatcher("Error.jsp").forward(request,response);
 	                    System.out.println(e2);
 	                }
 	            }     
 	        } catch (Exception e2) {
+	        	request.getSession().setAttribute("ErrorString", "Enroll Failed! You might've already enrolled in this course.");
+            	request.getRequestDispatcher("Error.jsp").forward(request,response);
 	            System.out.println(e2);
 	        }		
 	}
