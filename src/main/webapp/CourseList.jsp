@@ -12,18 +12,21 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 	</head>
 	<body>
+	
 		<%
-		
-        	/* Clears the cache */
-        	
+        
+        	/* clears the cache */
+        
     		response.setHeader("cache-control", "no-cache no-store must-revalidate");
 
-			/* If user tries to access a page without logging in then they will be redirected to the login page */
-        	
+        	/* If user tries to access a page without logging in 
+        	   then they will be redirected to the login page */
+        
     		if(session.getAttribute("Email") == null) {
 				response.sendRedirect("Login.jsp");
 			}
     	%>
+    	
 		<header id="head">
             <div id="name">
                 <img src="logo.png" alt="OCMS logo" height="40px">
@@ -53,7 +56,8 @@
 						t = rs0.getString("usertype");
 					}
 					
-					/* If user is a student then available options for student section will be shown on the navigation bar */
+					/* If user is a student then available options for 
+						student section will be shown on the navigation bar */
 					
 					if (t.equals("student")) {
 				%>
@@ -65,7 +69,8 @@
 				<%
 					}
 					
-					/* If user is an admin then available options for admin section will be shown on the navigation bar */
+					/* If user is an admin then available options for 
+					   admin section will be shown on the navigation bar */
 					
 					else if (t.equals("admin")) {
 				%>
